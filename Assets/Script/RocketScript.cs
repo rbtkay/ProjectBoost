@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RocketScript : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class RocketScript : MonoBehaviour
 
     Rigidbody shipBody;
     AudioSource engineSound;
+
+    enum State { Alive, Dying, Transcending };
+    State rocketState = State.Alive;
 
     // Use this for initialization
     void Start()
@@ -69,11 +73,24 @@ public class RocketScript : MonoBehaviour
                 print("it's alright");
                 break;
             case "Fuel":
-			print("Fuelling");
+                print("Fuelling");
+                break;
+            case "Finish":
+                rocketState = State.Transcending;
+                Invoke("LoadNextScene", 2f);
                 break;
             default:
                 print("Dead");
                 break;
         }
+    }
+
+    public void LoadNextScene()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void ReloadLevel(){
+        // if(SceneManager.GetActiveScene
     }
 }
